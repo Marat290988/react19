@@ -1,0 +1,17 @@
+.are-you-sure-content {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+
+  &__text {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}

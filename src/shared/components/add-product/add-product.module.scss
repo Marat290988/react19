@@ -1,0 +1,22 @@
+.add-product {
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &-image {
+
+      img {
+        max-width: 100%;
+        border-radius: 0.5rem;
+        height: auto;
+      }
+    }
+
+    &-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}
