@@ -2,6 +2,7 @@ import { CSSProperties } from 'react';
 import styles from './custom-grid.module.scss';
 import { Button } from '@mantine/core';
 import { ButtonSure } from './sure-button/sure-button';
+import { GridImage } from './grid-image/grid-image';
 
 export interface IGrid {
   headersName: string[],
@@ -41,7 +42,8 @@ export const CustomGrid: React.FC<{ gridValue: IGrid, currentPage: number }> = (
             {gridValue.columns.map((column, columnIndex) => (
               <div key={`cell-${index}-${columnIndex}`} className={styles['custom-grid__cell']} style={column.styles}>
                 {column.isImage ? (
-                  <img className={styles['custom-grid__img']} src={dataItem[column.name]} />
+                  <GridImage image={dataItem[column.name]} />
+                  // <img className={styles['custom-grid__img']} src={dataItem[column.name]} />
                 ) : column.isAction ? (
                   <div className={styles['custom-grid__buttons']}>
                     {column.buttons?.map((button, buttonIndex) => (

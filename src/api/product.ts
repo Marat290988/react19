@@ -110,6 +110,9 @@ export const ProductService = {
     }
   },
   getProductWithImage: async (products: IProduct[]): Promise<IProduct[]> => {
+    if (products.filter(p => !p.image).length === 0) {
+      return [];
+    }
     await Promise.all(products.filter(p => !p.image).map((product: IProduct) => ProductService.getProductImage(product.id))).then(images => {
       images.forEach(image => {
         if (image) {

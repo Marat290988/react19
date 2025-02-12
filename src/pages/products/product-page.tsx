@@ -21,15 +21,19 @@ const ProductPage: React.FC = () => {
 
   const getProductData = (page: number) => {
     const totalElementInPrev = (page - 1) * qtyElementOnPage;
-    const leftPart = storageProducts.slice(totalElementInPrev, storageProducts.length);
-    const nextPart = storageProducts
+    const leftPart = useProductStore.getState().products.slice(totalElementInPrev, useProductStore.getState().products.length);
+    const nextPart = useProductStore.getState().products
       .slice(
         totalElementInPrev,
         leftPart.length >= qtyElementOnPage ? totalElementInPrev + qtyElementOnPage : storageProducts.length
       );
     ProductService.getProductWithImage(nextPart).then(productsWithImage => {
-      productsWithImage.forEach(p => { updateProduct(p) });
-      setProducts(productsWithImage)
+      productsWithImage.forEach(p => { 
+        updateProduct(p);
+        const findIndex = nextPart.findIndex(p2 => p2.id === p.id);
+        nextPart[findIndex].image = p.image;
+      });
+      setProducts(nextPart);
     });
   }
 
@@ -45,6 +49,7 @@ const ProductPage: React.FC = () => {
     return ProductService.removeProduct(product).then(res => {
       if (res === 'OK') {
         removeProduct(product);
+        getProductData(pageData.currentPage);
       }
     })
   }
@@ -95,12 +100,16 @@ const ProductPage: React.FC = () => {
     setPageData(state => ({...state, currentPage: page}));
   }
 
+  const onUpdate = () => {
+    getProductData(pageData.currentPage);
+  }
+
   return (
     <div className={styles['product-page']}>
       <h2>Add / Edit Products Page</h2>
-      <AddProduct ref={productModal} />
+      <AddProduct ref={productModal} onUpdate={onUpdate} />
       <CustomGrid gridValue={grid} currentPage={pageData.currentPage - 1}  />
-      <Pagination total={pageData.totalPage} onChange={onPagChange} />
+      {pageData.totalPage > 0 && <Pagination total={pageData.totalPage} onChange={onPagChange} />}
     </div>
   );
 };

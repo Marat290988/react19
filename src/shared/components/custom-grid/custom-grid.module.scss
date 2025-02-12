@@ -1,7 +1,8 @@
 .custom-grid {
   display: grid;
   width: 100%;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   &__header {
     display: contents;

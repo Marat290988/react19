@@ -19,10 +19,11 @@ export interface AddProductRef {
   ref?: RefObject<{
     open: (product: IProduct) => void,
     close: () => void,
-  } | null>
+  } | null>,
+  onUpdate?: () => void
 }
 
-export const AddProduct: React.FC<AddProductRef> = ({ ref } ) => {
+export const AddProduct: React.FC<AddProductRef> = ({ ref, onUpdate } ) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [product, setProduct] = useState<AddProductProps>({ name: '', image: '', isTouched: false });
   const { addProduct, updateProduct } = useProductStore();
@@ -65,6 +66,7 @@ export const AddProduct: React.FC<AddProductRef> = ({ ref } ) => {
     ProductService.saveProduct(product, id).then(response => {
       if (response) {
         addProduct({...product, fbId: response[0].key as string, id: id});
+        onUpdate && onUpdate();
         closeModal();
       }
     });
@@ -75,6 +77,7 @@ export const AddProduct: React.FC<AddProductRef> = ({ ref } ) => {
     ProductService.updateProduct(updateProductItem).then(response => {
       if (response) {
         updateProduct(updateProductItem);
+        onUpdate && onUpdate();
         closeModal();
       }
     })

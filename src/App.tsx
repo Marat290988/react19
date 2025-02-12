@@ -11,6 +11,10 @@ import { useEffect, useState } from 'react';
 import { useLoadingStore } from './store/loading.store';
 import { ProductService } from './api/product';
 import useProductStore from './store/product.store';
+import { Path } from './shared/model/path.enum';
+import { ClientPage } from './pages/clients/client-page';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
 function App() {
 
@@ -53,19 +57,21 @@ function App() {
   return (
     <Router>
       <MantineProvider>
+        <Notifications position="top-right" zIndex={1000} />
         <Routes>
           {!isUserEntered && <Route path="/" element={<Layout />}>
-            <Route path="auth" element={<Auth />} />
-            <Route path="/" element={<Navigate to="/auth" />} />
-            <Route path="*" element={<Navigate to="/auth" />} />
+            <Route path={Path.AUTH} element={<Auth />} />
+            <Route path="/" element={<Navigate to={'/' + Path.AUTH} />} />
+            <Route path="*" element={<Navigate to={'/' + Path.AUTH} />} />
           </Route>}
           {isUserEntered &&
             <>
               <Route path="/" element={<Layout />}>
                 <Route element={<Main />}>
-                  <Route path="products" element={<ProductPage />} />
-                  <Route path="/" element={<Navigate to="/products" />} />
-                  <Route path="*" element={<Navigate to="/products" />} />
+                  <Route path={Path.PRODUCTS} element={<ProductPage />} />
+                  <Route path={Path.CLIENTS} element={<ClientPage />} />
+                  <Route path="/" element={<Navigate to={'/' + Path.PRODUCTS} />} />
+                  <Route path="*" element={<Navigate to={'/' + Path.PRODUCTS} />} />
                 </Route>
               </Route>
             </>
