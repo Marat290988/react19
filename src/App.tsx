@@ -15,6 +15,9 @@ import { Path } from './shared/model/path.enum';
 import { ClientPage } from './pages/clients/client-page';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
+import { ClientsService } from './api/clients';
+import useClientStore from './store/client.store';
+import { PreOrders } from './pages/pre-orders/pre-orders';
 
 function App() {
 
@@ -22,6 +25,7 @@ function App() {
   const { isLoading, setLoading } = useLoadingStore();
   const { setProducts } = useProductStore();
   const { isUserEntered, setUser } = useAuthStore();
+  const { setClients } = useClientStore();
   const [isCheckAuth, setIsCheckAuth] = useState(false);
 
   useEffect(() => {
@@ -39,10 +43,17 @@ function App() {
   useEffect(() => {
     setLoading(true);
     if (isUserEntered) {
-      ProductService.getProducts().then(products => {
+      Promise.all([
+        ProductService.getProducts().then(products => {
+          setProducts(products);
+        }),
+        ClientsService.getClients().then(clients => {
+          setClients(clients);
+        })
+      ]).then(() => {
         setLoading(false);
-        setProducts(products);
-      });
+      })
+        ;
     }
   }, [isUserEntered])
 
@@ -70,6 +81,7 @@ function App() {
                 <Route element={<Main />}>
                   <Route path={Path.PRODUCTS} element={<ProductPage />} />
                   <Route path={Path.CLIENTS} element={<ClientPage />} />
+                  <Route path={Path.PREORDERS} element={<PreOrders />} />
                   <Route path="/" element={<Navigate to={'/' + Path.PRODUCTS} />} />
                   <Route path="*" element={<Navigate to={'/' + Path.PRODUCTS} />} />
                 </Route>

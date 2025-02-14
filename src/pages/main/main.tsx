@@ -16,6 +16,9 @@ export const Main: React.FC = () => {
           <div className={`${location.pathname === '/' + Path.CLIENTS ? styles['main-links__item-active'] : styles['main-links__item']}`}>
             <Link to={'/' + Path.CLIENTS}>Clients</Link>
           </div>
+          <div className={`${location.pathname === '/' + Path.PREORDERS ? styles['main-links__item-active'] : styles['main-links__item']}`}>
+            <Link to={'/' + Path.PREORDERS}>Pre-orders</Link>
+          </div>
         </div>
         <Outlet />
       </main>

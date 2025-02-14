@@ -3,6 +3,7 @@ import styles from './custom-grid.module.scss';
 import { Button } from '@mantine/core';
 import { ButtonSure } from './sure-button/sure-button';
 import { GridImage } from './grid-image/grid-image';
+import DOMPurify from 'dompurify';
 
 export interface IGrid {
   headersName: string[],
@@ -10,6 +11,7 @@ export interface IGrid {
     name: string,
     isImage?: boolean,
     isAction?: boolean,
+    isInnerHTML?: boolean,
     styles?: CSSProperties,
     buttons?: {
       action?: Function | null,
@@ -49,7 +51,7 @@ export const CustomGrid: React.FC<{ gridValue: IGrid, currentPage: number }> = (
                     {column.buttons?.map((button, buttonIndex) => (
                       <div key={`button-${buttonIndex}`}>
                         {button.isSure ? <>
-                          <ButtonSure 
+                          <ButtonSure
                             key={`button-${buttonIndex}`}
                             onConfirm={() => button.typeAction === 'void' ? (button.action && button.action()) : (button.action && button.action(dataItem))}
                             btnConfig={button}
@@ -60,16 +62,16 @@ export const CustomGrid: React.FC<{ gridValue: IGrid, currentPage: number }> = (
                             key={`button-${buttonIndex}`}
                             onClick={() => button.typeAction === 'void' ? (button.action && button.action()) : (button.action && button.action(dataItem))}
                             color={button.buttonColor ? button.buttonColor : ''}
-                        >
-                          {button.buttonTitle}
-                        </Button>
+                          >
+                            {button.buttonTitle}
+                          </Button>
                         </>}
                       </div>
                     ))}
-                  </div>
-                ) : (
-                  dataItem[column.name]
-                )}
+                  </div>) 
+                  : column.isInnerHTML ? (<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(dataItem[column.name])}}></div>) 
+                  : (dataItem[column.name])
+                }
               </div>
             ))}
           </div>

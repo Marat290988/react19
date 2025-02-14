@@ -25,7 +25,7 @@ const ProductPage: React.FC = () => {
     const nextPart = useProductStore.getState().products
       .slice(
         totalElementInPrev,
-        leftPart.length >= qtyElementOnPage ? totalElementInPrev + qtyElementOnPage : storageProducts.length
+        leftPart.length >= qtyElementOnPage ? totalElementInPrev + qtyElementOnPage : useProductStore.getState().products.length
       );
     ProductService.getProductWithImage(nextPart).then(productsWithImage => {
       productsWithImage.forEach(p => { 
@@ -43,7 +43,7 @@ const ProductPage: React.FC = () => {
 
   useEffect(() => {
     setPageData(state => ({...state, totalPage: Math.ceil(storageProducts.length / qtyElementOnPage)}));
-  }, [storageProducts])
+  }, [storageProducts]);
 
   const deleteProductHandler = (product: IProduct): Promise<any> => {
     return ProductService.removeProduct(product).then(res => {
@@ -96,7 +96,7 @@ const ProductPage: React.FC = () => {
     )
   }
 
-  const onPagChange = (page: number) => {
+  const onPageChange = (page: number) => {
     setPageData(state => ({...state, currentPage: page}));
   }
 
@@ -109,7 +109,7 @@ const ProductPage: React.FC = () => {
       <h2>Add / Edit Products Page</h2>
       <AddProduct ref={productModal} onUpdate={onUpdate} />
       <CustomGrid gridValue={grid} currentPage={pageData.currentPage - 1}  />
-      {pageData.totalPage > 0 && <Pagination total={pageData.totalPage} onChange={onPagChange} />}
+      {pageData.totalPage > 0 && <Pagination total={pageData.totalPage} onChange={onPageChange} />}
     </div>
   );
 };

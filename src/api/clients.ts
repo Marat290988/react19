@@ -1,4 +1,4 @@
-import { get, push, ref, remove, update } from "firebase/database";
+import { DatabaseReference, get, push, ref, remove, update } from "firebase/database";
 import { dataBase } from "./firebaseConfig";
 import { showNotification } from "../shared/utils/notification";
 
@@ -15,7 +15,7 @@ export interface IClient extends IClientBase {
 const path = 'clients';
 
 export const ClientsService = {
-  saveClient: async (clientData: {name: string, contacts?: string}) => {
+  saveClient: async (clientData: {name: string, contacts?: string}): Promise<IClient | null> => {
     const client: IClientBase = {
       id: crypto.randomUUID(),
       name: clientData.name,
@@ -23,10 +23,15 @@ export const ClientsService = {
     };
 
     const dataRef = ref(dataBase, path);
-    return push(dataRef, client).catch(error => {
+    const res = await push(dataRef, client).catch(error => {
       console.error('Error saving client:', error);
       showNotification('Error saving client', 'red');
-    })
+    });
+    const savedClient = {
+      ...client,
+      fbId: (res as DatabaseReference).key as string,
+    };
+    return savedClient ? savedClient : null;
   },
   updateClient: async (client: IClient) => {
     const dataRef = ref(dataBase, `${path}/${client.fbId}`);
@@ -35,17 +40,18 @@ export const ClientsService = {
       name: client.name,
       contacts: client.contacts,
     };
-    return update(dataRef, {baseClient}).catch(error => {
+    return update(dataRef, {baseClient}).then(() => true).catch(error => {
       console.error('Error updating client:', error);
       showNotification('Error updating client', 'red');
     });
   },
-  removeClients: async (client: IClient) => {
+  removeClients: async (client: IClient): Promise<'OK'> => {
     const dataRef = ref(dataBase, `${path}/${client.fbId}`);
-    return remove(dataRef).catch(error => {
+    await remove(dataRef).catch(error => {
       console.error('Error removing client:', error);
       showNotification('Error removing client', 'red');
     });
+    return 'OK';
   },
   getClients: async (): Promise<IClient[]> => {
     const dataRef = ref(dataBase, path);
