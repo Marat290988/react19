@@ -10,7 +10,7 @@ const qtyElementOnPage = 10;
 
 export const ClientPage: React.FC = () => {
 
-  const { clients: storageClients, removeClient, updateClients } = useClientStore();
+  const { clients: storageClients, removeClient } = useClientStore();
   const [clients, setClients] = useState<IClient[]>([]);
   const [pageData, setPageData] = useState({
     currentPage: 1,
