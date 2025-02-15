@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 import styles from './add-pre-orders.module.scss';
-import { Modal, Textarea, TextInput } from '@mantine/core';
+import { Modal, Textarea } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { IPreOrder, PreOrderStatus } from '../../model/pre-order.interface';
 import { SelectClient } from '../select-client/select-client';
