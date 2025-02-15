@@ -51,7 +51,7 @@ export const ClientPage: React.FC = () => {
   } | null>(null);
 
   const grid: IGrid = {
-    headersName: ['', 'Name', 'Contacts'],
+    headersName: ['Name', 'Contacts', 'Edit'],
     gridSize: '50px minmax(200px, auto) minmax(200px, auto) 200px',
     data: clients,
     columns: [
