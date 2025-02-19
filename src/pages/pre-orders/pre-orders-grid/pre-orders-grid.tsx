@@ -64,7 +64,7 @@ export const PreOrdersGrid: React.FC<IPreOrdersGridProps> = ({ preOrders }) => {
             {preOrderItem.clientContacts.length === 0 && (<>{preOrderItem.clientName}</>)}
           </div>
           <div className={styles['pre-orders-grid_body__cell']}>
-            <PreOrdersStatus status={preOrderItem.status} changeStatus={(status: PreOrderStatus) => Promise.resolve(true)} />
+            <PreOrdersStatus status={preOrderItem.status} changeStatus={(_status: PreOrderStatus) => Promise.resolve(true)} />
           </div>
           <div className={`${styles['pre-orders-grid_body__cell']} ${styles['price']}`}>
             {formatNumberWithSpaces(+preOrderItem.salePrice)}
