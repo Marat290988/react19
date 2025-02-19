@@ -4,6 +4,9 @@
   --bg-hover: #e7f0fb;
   --border: #809bc0;
   --bg-dis: #efefef;
+  --green: #12b886;
+  --red: #fa5252;
+  --warning: #fd7e14;
 }
 
 * {

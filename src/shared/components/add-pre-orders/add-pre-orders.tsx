@@ -6,11 +6,12 @@ import { IPreOrder, PreOrderStatus } from '../../model/pre-order.interface';
 import { SelectClient } from '../select-client/select-client';
 import { IClient } from '../../../api/clients';
 import { PriceInput } from '../price-input/price-input';
+import { PreOrdersService } from '../../../api/preorders';
 
 interface AddPreOrdersProps {
   isOpen: boolean,
   onClose: () => void,
-  preOrder?: IPreOrder
+  preOrderItem?: IPreOrder
 }
 
 const initialPreOrder = {
@@ -28,7 +29,7 @@ const initialPreOrder = {
   isTouchedClientName: false,
 }
 
-export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose }) => {
+export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose, preOrderItem }) => {
 
   const [opened, { open, close }] = useDisclosure(false);
   const [preOrder, setPreOrder] = useState<IPreOrder & {
@@ -36,12 +37,24 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose }) =
     isTouchedSalePrice: boolean,
     isTouchedClientName: boolean
   }>({...initialPreOrder});
+  const [blockButton, setBlockButton] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       open();
     }
   }, [isOpen])
+
+  useEffect(() => {
+    if (preOrderItem) {
+      setPreOrder({
+        ...preOrderItem,
+        isTouchedDesc: true,
+        isTouchedSalePrice: true,
+        isTouchedClientName: true,
+      });
+    }
+  }, [preOrderItem])
 
   const closeModal = () => {
     setPreOrder({...initialPreOrder});
@@ -63,6 +76,15 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose }) =
     setPreOrder(prevVal => ({ ...prevVal, salePrice, isTouchedSalePrice: true }));
   }
 
+  const savePreOrder = () => {
+    setBlockButton(true);
+    PreOrdersService.savePreOrder(preOrder)
+      .then((_preOrder) => {
+        setBlockButton(false);
+        closeModal();
+      })
+  }
+
   const isDisabled = preOrder.clientName === '' || preOrder.clientName === '' || preOrder.salePrice === '';
 
   return (
@@ -75,10 +97,10 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose }) =
       >
         <div className={styles['add-pre-orders__body']}>
           <Textarea
-            value={preOrder.desc}
+            value={preOrder.desc.replace(/<br>/g, "\n")}
             label="Pre-ordered item"
             placeholder="Pre-ordered item"
-            onInput={(e) => setPreOrder(prevVal => ({ ...prevVal, desc: (e.target as any).value }))}
+            onInput={(e) => setPreOrder(prevVal => ({ ...prevVal, desc: (e.target as any).value.replace(/\n/g, "<br>") }))}
             onBlur={() => setPreOrder(prevVal => ({ ...prevVal, isTouchedDesc: true }))}
             error={preOrder.isTouchedDesc && preOrder.desc === ''}
           />
@@ -86,7 +108,8 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose }) =
           <PriceInput onChangePrice={onChangeSalePrice} hasError={preOrder.isTouchedSalePrice && preOrder.salePrice === ''} />
           <div className={styles['add-product__body-buttons']}>
             <Button
-              disabled={isDisabled}
+              disabled={isDisabled || blockButton}
+              onClick={savePreOrder}
             >
               Save
             </Button>

@@ -17,5 +17,5 @@ export interface IPreOrderBase {
 
 export interface IPreOrder extends IPreOrderBase {
   id: string,
-  fbId: string,
+  fbId?: string,
 }

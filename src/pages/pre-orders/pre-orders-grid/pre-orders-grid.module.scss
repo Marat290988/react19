@@ -1,0 +1,79 @@
+.pre-orders-grid {
+  display: grid;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  grid-template-columns: 50px 100px minmax(200px, auto) 200px 120px 200px 100px;
+
+  &_header {
+    display: contents;
+
+    &__cell {
+      font-weight: bold;
+      padding: 0.2rem;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-right: none;
+
+      &:last-child {
+        border-right: 1px solid var(--border);
+      }
+    }
+  }
+
+  &_body {
+    display: contents;
+
+    &__cell {
+      padding: 0.2rem;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-right: none;
+
+      &:last-child {
+        border-right: 1px solid var(--border);
+      }
+    }
+
+    .grid-date {
+      font-size: 13px;
+      font-weight: 700;
+      justify-content: center;
+      color: var(--mantine-color-blue-filled);
+      text-align: center;
+    }
+
+    &__over-target {
+      width: 100%;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .price {
+      justify-content: flex-end;
+      padding-right: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}
+
+.contacts {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.contacts__list {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mantine-color-blue-filled);
+}

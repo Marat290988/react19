@@ -51,7 +51,7 @@ export const SelectClient: React.FC<SelectClientProps> = ({ onSelectClient, hasE
       placeholder="Pick client or enter"
       renderOption={renderAutocompleteOption}
       data={data}
-      onChange={(e) => onSelectClient && onSelectClient({ id: '', name: e as string, contacts: '', fbId: '' })}
+      onInput={(e) => onSelectClient && onSelectClient({ id: '', name: (e.target as any).value as string, contacts: '', fbId: '' })}
       error={hasError}
     />
   )

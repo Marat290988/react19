@@ -40,7 +40,7 @@ export const ClientsService = {
       name: client.name,
       contacts: client.contacts,
     };
-    return update(dataRef, {baseClient}).then(() => true).catch(error => {
+    return update(dataRef, baseClient).then(() => true).catch(error => {
       console.error('Error updating client:', error);
       showNotification('Error updating client', 'red');
     });

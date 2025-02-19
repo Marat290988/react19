@@ -22,7 +22,7 @@ import { PreOrders } from './pages/pre-orders/pre-orders';
 function App() {
 
   const { validateToken } = useAuthStore();
-  const { isLoading, setLoading } = useLoadingStore();
+  const { isLoading, setLoading, isLocalLoading } = useLoadingStore();
   const { setProducts } = useProductStore();
   const { isUserEntered, setUser } = useAuthStore();
   const { setClients } = useClientStore();
@@ -66,31 +66,39 @@ function App() {
   }
 
   return (
-    <Router>
-      <MantineProvider>
-        <Notifications position="top-right" zIndex={1000} />
-        <Routes>
-          {!isUserEntered && <Route path="/" element={<Layout />}>
-            <Route path={Path.AUTH} element={<Auth />} />
-            <Route path="/" element={<Navigate to={'/' + Path.AUTH} />} />
-            <Route path="*" element={<Navigate to={'/' + Path.AUTH} />} />
-          </Route>}
-          {isUserEntered &&
-            <>
-              <Route path="/" element={<Layout />}>
-                <Route element={<Main />}>
-                  <Route path={Path.PRODUCTS} element={<ProductPage />} />
-                  <Route path={Path.CLIENTS} element={<ClientPage />} />
-                  <Route path={Path.PREORDERS} element={<PreOrders />} />
-                  <Route path="/" element={<Navigate to={'/' + Path.PRODUCTS} />} />
-                  <Route path="*" element={<Navigate to={'/' + Path.PRODUCTS} />} />
+    <>
+      {isLocalLoading && (<MantineProvider>
+        <div className="local-loader">
+          <Loader color="blue" size="xl" type="dots" />
+        </div>
+      </MantineProvider>)}
+      <Router>
+        <MantineProvider>
+          <Notifications position="top-right" zIndex={1000} />
+          <Routes>
+            {!isUserEntered && <Route path="/" element={<Layout />}>
+              <Route path={Path.AUTH} element={<Auth />} />
+              <Route path="/" element={<Navigate to={'/' + Path.AUTH} />} />
+              <Route path="*" element={<Navigate to={'/' + Path.AUTH} />} />
+            </Route>}
+            {isUserEntered &&
+              <>
+                <Route path="/" element={<Layout />}>
+                  <Route element={<Main />}>
+                    <Route path={Path.PRODUCTS} element={<ProductPage />} />
+                    <Route path={Path.CLIENTS} element={<ClientPage />} />
+                    <Route path={Path.PREORDERS} element={<PreOrders />} />
+                    <Route path="/" element={<Navigate to={'/' + Path.PRODUCTS} />} />
+                    <Route path="*" element={<Navigate to={'/' + Path.PRODUCTS} />} />
+                  </Route>
                 </Route>
-              </Route>
-            </>
-          }
-        </Routes>
-      </MantineProvider>
-    </Router>
+              </>
+            }
+          </Routes>
+        </MantineProvider>
+      </Router>
+    </>
+
   )
 }
 
