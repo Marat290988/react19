@@ -7,10 +7,18 @@ import { PreOrdersStatus } from './pre-orders-status/pre-orders-status';
 import { ButtonSure } from '../../../shared/components/custom-grid/sure-button/sure-button';
 
 interface IPreOrdersGridProps {
-  preOrders: IPreOrder[]
+  preOrders: IPreOrder[],
+  updatePreOrder: (preOrderItem: IPreOrder) => void,
+  openEditModal: (preOrderItem: IPreOrder) => void,
+  removePreOrder: (preOrderItem: IPreOrder) => Promise<any>,
 }
 
-export const PreOrdersGrid: React.FC<IPreOrdersGridProps> = ({ preOrders }) => {
+export const PreOrdersGrid: React.FC<IPreOrdersGridProps> = ({ preOrders, updatePreOrder, openEditModal, removePreOrder }) => {
+
+  const updateStatus = (status: PreOrderStatus, preOrderItem: IPreOrder) => {
+    preOrderItem.status = status;
+    updatePreOrder(preOrderItem);
+  }
 
   return (
     <div className={styles['pre-orders-grid']}>
@@ -64,7 +72,7 @@ export const PreOrdersGrid: React.FC<IPreOrdersGridProps> = ({ preOrders }) => {
             {preOrderItem.clientContacts.length === 0 && (<>{preOrderItem.clientName}</>)}
           </div>
           <div className={styles['pre-orders-grid_body__cell']}>
-            <PreOrdersStatus status={preOrderItem.status} changeStatus={(_status: PreOrderStatus) => Promise.resolve(true)} />
+            <PreOrdersStatus status={preOrderItem.status} changeStatus={updateStatus} preOrderItem={preOrderItem} />
           </div>
           <div className={`${styles['pre-orders-grid_body__cell']} ${styles['price']}`}>
             {formatNumberWithSpaces(+preOrderItem.salePrice)}
@@ -72,7 +80,7 @@ export const PreOrdersGrid: React.FC<IPreOrdersGridProps> = ({ preOrders }) => {
           <div className={styles['pre-orders-grid_body__cell']}>
             <div className={styles['buttons']}>
               <ButtonSure
-                onConfirm={() => Promise.resolve(true)}
+                onConfirm={() => removePreOrder(preOrderItem)}
                 btnConfig={{
                   buttonTitle: 'Delete',
                   typeAction: 'item',
@@ -82,7 +90,9 @@ export const PreOrdersGrid: React.FC<IPreOrdersGridProps> = ({ preOrders }) => {
                 title={'Delete'}
               />
               <Button
-                onClick={() => {}}
+                onClick={() => {
+                  openEditModal(preOrderItem);
+                }}
               >
                 Edit
               </Button>

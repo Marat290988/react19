@@ -12,6 +12,7 @@ export const PreOrders: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { setLocalLoading } = useLoadingStore();
   const [preOrders, setPreOrders] = useState<IPreOrder[]>([]);
+  const [editedPreOrderItem, setEditedPreOrderItem] = useState<IPreOrder | null>(null);
 
   useEffect(() => {
     setLocalLoading(true);
@@ -21,8 +22,49 @@ export const PreOrders: React.FC = () => {
     });
   }, []);
 
-  const onCloseModal = () => {
+  const onCloseModal = (preOrderItem?: IPreOrder) => {
     setIsOpenModal(false);
+    setEditedPreOrderItem(null);
+    if (preOrderItem) {
+      const findIndex = preOrders.findIndex(item => item.fbId === preOrderItem.fbId);
+      if (findIndex > -1) {
+        setPreOrders(prevState => {
+          prevState[findIndex] = preOrderItem;
+          return [...prevState];
+        })
+      } else {
+        setPreOrders([...preOrders, preOrderItem]);
+      }
+    }
+  }
+
+  const openEditModal = (preOrderItem: IPreOrder) => {
+    setEditedPreOrderItem(preOrderItem);
+    setIsOpenModal(true);
+  }
+
+  const updatePreOrder = (preOrderItem: IPreOrder) => {
+    PreOrdersService.updatePreOrder(preOrderItem).then(res => {
+      if (res && res === 'OK') {
+        setPreOrders(prevState => {
+          const findIndex = prevState.findIndex(item => item.fbId === preOrderItem.fbId);
+          if (findIndex > -1) {
+            prevState[findIndex] = preOrderItem;
+          }
+          return [...prevState];
+        })
+      }
+    })
+  }
+
+  const removePreOrder = (preOrderItem: IPreOrder) => {
+    return PreOrdersService.removeClients(preOrderItem).then(res => {
+      if (res && res === 'OK') {
+        setPreOrders(prevState => {
+          return prevState.filter(item => item.fbId !== preOrderItem.fbId);
+        })
+      }
+    })
   }
 
   return (
@@ -34,9 +76,13 @@ export const PreOrders: React.FC = () => {
       <AddPreOrders
         isOpen={isOpenModal}
         onClose={onCloseModal}
+        preOrderItem={editedPreOrderItem}
       />
       <PreOrdersGrid 
         preOrders={preOrders} 
+        updatePreOrder={updatePreOrder}
+        openEditModal={openEditModal}
+        removePreOrder={removePreOrder}
       />
     </div>
   )

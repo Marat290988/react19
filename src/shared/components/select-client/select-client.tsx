@@ -1,19 +1,21 @@
 import { Autocomplete, AutocompleteProps, Group } from "@mantine/core"
 import useClientStore from "../../../store/client.store"
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IClient } from "../../../api/clients";
 
 interface SelectClientProps {
   onSelectClient?: (client: IClient) => void,
-  hasError?: boolean
+  hasError?: boolean,
+  selectedClientId?: string,
 }
 
-export const SelectClient: React.FC<SelectClientProps> = ({ onSelectClient, hasError }) => {
+export const SelectClient: React.FC<SelectClientProps> = ({ onSelectClient, hasError, selectedClientId }) => {
 
   const { clients } = useClientStore();
   const data: { value: string, label: string }[] = clients.map(client => ({ value: client.id, label: client.name }));
   const clientsData: Record<string, { label: string, value: string }> = {};
   clients.forEach(client => clientsData[client.id] = { label: client.name, value: client.id });
+  const [stateClient, setStateClient] = useState<string | undefined>(undefined);
 
   const selectClient = (clientId: string) => {
     const findClient = clients.find(client => client.id === clientId);
@@ -21,6 +23,17 @@ export const SelectClient: React.FC<SelectClientProps> = ({ onSelectClient, hasE
       onSelectClient(findClient);
     }
   }
+
+  let selectedFindClientName: string | undefined;
+
+  useEffect(() => {
+    if (selectedClientId && selectedClientId !== '') {
+      selectedFindClientName = clients.find(client => client.fbId === selectedClientId)?.name;
+      setStateClient(selectedFindClientName!);
+    } else {
+      setStateClient(undefined);
+    }
+  }, [selectedClientId]);
 
   const renderAutocompleteOption: AutocompleteProps['renderOption'] = ({ option }) => {
 
@@ -53,6 +66,7 @@ export const SelectClient: React.FC<SelectClientProps> = ({ onSelectClient, hasE
       data={data}
       onInput={(e) => onSelectClient && onSelectClient({ id: '', name: (e.target as any).value as string, contacts: '', fbId: '' })}
       error={hasError}
+      value={stateClient}
     />
   )
 }

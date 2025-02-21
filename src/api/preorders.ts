@@ -1,4 +1,4 @@
-import { DatabaseReference, get, push, ref } from "firebase/database";
+import { DatabaseReference, get, push, ref, remove, update } from "firebase/database";
 import { IPreOrder } from "../shared/model/pre-order.interface";
 import { dataBase } from "./firebaseConfig";
 import { showNotification } from "../shared/utils/notification";
@@ -44,5 +44,30 @@ export const PreOrdersService = {
       console.log("No data available");
       return [];
     }
+  },
+  updatePreOrder: async (preOrderItem: IPreOrder): Promise<string | void> => {
+    const dataRef = ref(dataBase, `${path}/${preOrderItem.fbId}`);
+    const basePreOrder: IPreOrder = {
+      id: preOrderItem.id,
+      desc: preOrderItem.desc,
+      salePrice: preOrderItem.salePrice,
+      status: preOrderItem.status,
+      createdAt: preOrderItem.createdAt,
+      clientName: preOrderItem.clientName,
+      clientContacts: preOrderItem.clientContacts,
+      clientfbId: preOrderItem.clientfbId,
+    };
+    return update(dataRef, basePreOrder).then(() => 'OK').catch((error) => {
+      console.error('Error updating pre-order:', error);
+      showNotification('Error updating pre-order', 'red');
+    });
+  },
+  removeClients: async (preOrderItem: IPreOrder): Promise<'OK'> => {
+    const dataRef = ref(dataBase, `${path}/${preOrderItem.fbId}`);
+    await remove(dataRef).catch(error => {
+      console.error('Error removing client:', error);
+      showNotification('Error removing client', 'red');
+    });
+    return 'OK';
   },
 };

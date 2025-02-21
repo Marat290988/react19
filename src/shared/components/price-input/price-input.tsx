@@ -5,12 +5,13 @@ import Inputmask from 'inputmask';
 interface PriceInputProps {
   onChangePrice?: (price: string) => void,
   hasError?: boolean,
+  price?: string,
 }
 
-export const PriceInput: React.FC<PriceInputProps> = ({ onChangePrice, hasError }) => {
+export const PriceInput: React.FC<PriceInputProps> = ({ onChangePrice, hasError, price }) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(price ? price :'');
 
   useEffect(() => {
     if (inputRef.current) {

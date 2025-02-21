@@ -10,8 +10,8 @@ import { PreOrdersService } from '../../../api/preorders';
 
 interface AddPreOrdersProps {
   isOpen: boolean,
-  onClose: () => void,
-  preOrderItem?: IPreOrder
+  onClose: (preOrderItem?: IPreOrder) => void,
+  preOrderItem?: IPreOrder | null
 }
 
 const initialPreOrder = {
@@ -49,6 +49,7 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose, pre
     if (preOrderItem) {
       setPreOrder({
         ...preOrderItem,
+        salePrice: preOrderItem.salePrice,
         isTouchedDesc: true,
         isTouchedSalePrice: true,
         isTouchedClientName: true,
@@ -56,10 +57,14 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose, pre
     }
   }, [preOrderItem])
 
-  const closeModal = () => {
+  const closeModal = (preOrderItem?: IPreOrder) => {
     setPreOrder({...initialPreOrder});
     close();
-    onClose();
+    if (preOrderItem) {
+      onClose(preOrderItem);
+    } else {
+      onClose();
+    }
   }
 
   const onSelectClient = (client: IClient) => {
@@ -79,10 +84,28 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose, pre
   const savePreOrder = () => {
     setBlockButton(true);
     PreOrdersService.savePreOrder(preOrder)
-      .then((_preOrder) => {
+      .then((preOrder) => {
+        if (preOrder) {
+          closeModal(preOrder);
+        } else {
+          closeModal();
+        }
         setBlockButton(false);
-        closeModal();
+        
       })
+  }
+
+  const updatePreOrder = () => {
+    setBlockButton(true);
+    PreOrdersService.updatePreOrder(preOrder)
+      .then((res) => {
+        if (res === 'OK') {
+          closeModal(preOrder);
+        } else {
+          closeModal();
+        }
+        setBlockButton(false);
+      });
   }
 
   const isDisabled = preOrder.clientName === '' || preOrder.clientName === '' || preOrder.salePrice === '';
@@ -104,12 +127,20 @@ export const AddPreOrders: React.FC<AddPreOrdersProps> = ({ isOpen, onClose, pre
             onBlur={() => setPreOrder(prevVal => ({ ...prevVal, isTouchedDesc: true }))}
             error={preOrder.isTouchedDesc && preOrder.desc === ''}
           />
-          <SelectClient onSelectClient={onSelectClient} hasError={preOrder.isTouchedClientName && preOrder.clientName === ''} />
-          <PriceInput onChangePrice={onChangeSalePrice} hasError={preOrder.isTouchedSalePrice && preOrder.salePrice === ''} />
+          <SelectClient 
+            onSelectClient={onSelectClient} 
+            hasError={preOrder.isTouchedClientName && preOrder.clientName === ''} 
+            selectedClientId={preOrder.clientfbId}
+          />
+          <PriceInput 
+            onChangePrice={onChangeSalePrice} 
+            hasError={preOrder.isTouchedSalePrice && preOrder.salePrice === ''} 
+            price={preOrder.salePrice}
+          />
           <div className={styles['add-product__body-buttons']}>
             <Button
               disabled={isDisabled || blockButton}
-              onClick={savePreOrder}
+              onClick={preOrderItem ? updatePreOrder : savePreOrder}
             >
               Save
             </Button>

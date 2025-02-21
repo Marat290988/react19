@@ -1,13 +1,14 @@
-import { PreOrderStatus } from '../../../../shared/model/pre-order.interface';
+import { IPreOrder, PreOrderStatus } from '../../../../shared/model/pre-order.interface';
 import styles from './pre-orders-status.module.scss';
 
 export const PreOrdersStatus: React.FC<{
   status: PreOrderStatus, 
-  changeStatus: (status: PreOrderStatus) => void
-}> = ({ status, changeStatus }) => {
+  preOrderItem: IPreOrder,
+  changeStatus: (status: PreOrderStatus, preOrderItem: IPreOrder) => void
+}> = ({ status, changeStatus, preOrderItem }) => {
 
   const onClickStatus = (status: PreOrderStatus) => {
-    changeStatus(status);
+    changeStatus(status, preOrderItem);
   }
 
   return (
