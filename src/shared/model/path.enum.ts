@@ -4,4 +4,12 @@ export enum Path {
   CLIENTS = 'clients',
   PREORDERS = 'preorders',
   AUTH = 'auth',
+  ORDERS = 'orders',
+}
+
+export enum PathOrder {
+  NEW = 'new',
+  WATCH = 'watch',
+  REPORTS = 'reports',
+  ORDERSLIST = 'orderslist',
 }

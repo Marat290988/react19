@@ -1,0 +1,15 @@
+.orders-nav {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 0.2rem;
+
+  &__item {
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--text);
+  }
+
+  &__item.active {
+    color: var(--primary);
+  }
+}

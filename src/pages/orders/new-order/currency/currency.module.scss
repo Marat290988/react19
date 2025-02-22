@@ -1,0 +1,13 @@
+.currency {
+  padding: 0.4rem;
+
+  &__row {
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-end;
+  }
+
+  label {
+    font-size: 12px;
+  }
+}

@@ -6,9 +6,10 @@ interface PriceInputProps {
   onChangePrice?: (price: string) => void,
   hasError?: boolean,
   price?: string,
+  label?: string,
 }
 
-export const PriceInput: React.FC<PriceInputProps> = ({ onChangePrice, hasError, price }) => {
+export const PriceInput: React.FC<PriceInputProps> = ({ onChangePrice, hasError, price, label }) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [value, setValue] = useState(price ? price :'');
@@ -30,7 +31,7 @@ export const PriceInput: React.FC<PriceInputProps> = ({ onChangePrice, hasError,
 
   return (
     <TextInput 
-      label="Sale price"
+      label={label ? label : "Sale price"}
       value={value}
       onChange={handleChange}
       ref={inputRef}

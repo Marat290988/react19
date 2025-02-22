@@ -18,6 +18,7 @@ import '@mantine/notifications/styles.css';
 import { ClientsService } from './api/clients';
 import useClientStore from './store/client.store';
 import { PreOrders } from './pages/pre-orders/pre-orders';
+import { Orders } from './pages/orders/orders';
 
 function App() {
 
@@ -88,6 +89,7 @@ function App() {
                     <Route path={Path.PRODUCTS} element={<ProductPage />} />
                     <Route path={Path.CLIENTS} element={<ClientPage />} />
                     <Route path={Path.PREORDERS} element={<PreOrders />} />
+                    <Route path={Path.ORDERS + '/*'} element={<Orders />} />
                     <Route path="/" element={<Navigate to={'/' + Path.PRODUCTS} />} />
                     <Route path="*" element={<Navigate to={'/' + Path.PRODUCTS} />} />
                   </Route>
