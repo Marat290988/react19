@@ -5,6 +5,15 @@
     display: flex;
     gap: 0.4rem;
     align-items: flex-end;
+    width: 100%;
+
+    &-val {
+      width: 40px;
+      display: flex;
+      align-items: center;
+      height: 36px;
+      justify-content: center;
+    }
   }
 
   label {

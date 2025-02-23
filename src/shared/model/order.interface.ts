@@ -2,8 +2,8 @@
 export interface IOrder {
   productOrder: IProductOrder[];
   expenses: IExpense[];
-  currencyName: string; // Default $
-  currencyRate: string; // Two numbers after the decimal point
+  purchaseCurrencyName: string; // Default $
+  currencyRateUZSToUSD: string; // Two numbers after the decimal point
   purchaseCurrencyRateToUSD: string; // Two numbers after the decimal point
   discount: string; // Two numbers after the decimal point in currency
   createdAt: string,

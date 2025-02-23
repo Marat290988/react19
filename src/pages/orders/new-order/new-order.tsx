@@ -7,8 +7,8 @@ const getInitState = ():IOrder => {
   return {
     productOrder: [],
     expenses: [],
-    currencyName: '$',
-    currencyRate: '',
+    purchaseCurrencyName: '',
+    currencyRateUZSToUSD: '',
     purchaseCurrencyRateToUSD: '',
     discount: '',
     createdAt: new Date().toISOString(),
@@ -27,7 +27,7 @@ export const NewOrder: React.FC = () => {
         (data: {Rate: string, Ccy: string}[]) => {
           const findUsdCurrency = data.find(item => item.Ccy === 'USD');
           if (findUsdCurrency) {
-            setOrder(prevVal => ({...prevVal, currencyRate: findUsdCurrency.Rate, currencyName: '$'}));
+            setOrder(prevVal => ({...prevVal, currencyRateUZSToUSD: findUsdCurrency.Rate}));
           }
         })
         .catch(error => console.error('Error:', error));
