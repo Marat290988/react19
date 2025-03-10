@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    exclude: ["@tabler/icons-react"],
+    include: ["@tabler/icons-react"],
   },
 })

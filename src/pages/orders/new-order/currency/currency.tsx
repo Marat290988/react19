@@ -66,7 +66,7 @@ export const Currency: React.FC<PreferencesProps> = ({ productOrder, updateOrder
             <div className={styles['currency__row']}>
               <div style={{ width: 'calc(100% - 40px)' }}>
                 <PriceInput
-                  label={`If purchased is not $`}
+                  label={`Currency * Currency rate = 1$`}
                   price={currencyState.purchaseCurrencyRateToUSD}
                   onChangePrice={(currency) => setCurrencyState(prevVal => ({ ...prevVal, purchaseCurrencyRateToUSD: currency }))}
                   hasError={currencyState.purchaseCurrencyRateToUSD === '' && currencyState.purchaseCurrencyName !== ''}

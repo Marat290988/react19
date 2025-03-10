@@ -2,10 +2,22 @@ import { useEffect, useState } from 'react';
 import { IOrder } from '../../../shared/model/order.interface';
 import styles from './new-order.module.scss';
 import { Currency } from './currency/currency';
+import { OrdersGrid } from '../orders-grid/orders-grid';
+import { Button } from '@mantine/core';
 
 const getInitState = ():IOrder => {
   return {
-    productOrder: [],
+    productOrder: [{
+      id: crypto.randomUUID(),
+      name: '',
+      clientContacts: '',
+      clientId: '',
+      clientName: '',
+      productId: '',
+      purchasePrice: '',
+      quantity: 1,
+      sellPrice: '',
+    }],
     expenses: [],
     purchaseCurrencyName: '',
     currencyRateUZSToUSD: '',
@@ -34,7 +46,16 @@ export const NewOrder: React.FC = () => {
   }, []);
 
   const updateOrder = (order: IOrder) => {
-    setOrder(order);
+    setOrder({...order});
+  }
+
+  const addNewProduct = () => {
+    setOrder(prevVal => {
+      return {
+        ...prevVal,
+        productOrder: [...prevVal.productOrder, getInitState().productOrder[0]]
+      };
+    })
   }
 
   return (
@@ -43,6 +64,17 @@ export const NewOrder: React.FC = () => {
         productOrder={order} 
         updateOrder={updateOrder} 
       />
+      <OrdersGrid 
+        order={order}
+        updateOrder={updateOrder}
+      />
+      <div>
+        <Button variant='filled'
+          onClick={addNewProduct}
+        >
+          Add new product row
+        </Button>
+      </div>
     </div>
   );
 }

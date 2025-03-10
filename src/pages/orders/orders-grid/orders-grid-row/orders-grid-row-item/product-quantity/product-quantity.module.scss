@@ -1,0 +1,25 @@
+.product-quantity {
+  background-color: var(--bg-hover);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 40px;
+  user-select: none;
+
+  &__input {
+    font-size: 0.7rem;
+  }
+
+  &__buttons {
+    display: flex;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      padding-left: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-right: 0.2rem;
+      background-color: var(--bg);
+      cursor: pointer;
+    }
+  }
+}

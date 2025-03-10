@@ -12,7 +12,7 @@ interface PriceInputProps {
 export const PriceInput: React.FC<PriceInputProps> = ({ onChangePrice, hasError, price, label }) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [value, setValue] = useState(price ? price :'');
+  const [value, setValue] = useState(price ? price : '');
 
   useEffect(() => {
     if (inputRef.current) {

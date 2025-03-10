@@ -13,6 +13,7 @@ export interface IOrder {
 }
 
 export interface IProductOrder {
+  id: string;
   productId: string;
   name: string;
   purchasePrice: string; // Two numbers after the decimal point in currency

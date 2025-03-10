@@ -1,0 +1,22 @@
+.grid-row-item {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  word-break: break-all;
+
+  &.border-right {
+    border-right: 1px solid var(--border);
+  }
+}
+
+.number-item {
+  &__svg {
+    cursor: pointer;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

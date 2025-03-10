@@ -2,10 +2,12 @@
   --text: #465565;
   --bg: #d4d9dd;
   --bg-hover: #e7f0fb;
+  --bg-white: #fff;
   --border: #809bc0;
   --bg-dis: #efefef;
   --green: #12b886;
   --red: #fa5252;
+  --red-light: #ffc7c7;
   --warning: #fd7e14;
   --primary: #228be6;
 }
