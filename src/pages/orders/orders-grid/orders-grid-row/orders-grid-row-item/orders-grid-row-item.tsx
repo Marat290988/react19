@@ -18,7 +18,6 @@ interface IOrdersGridRowItemProps {
 }
 
 export const OrdersGridRowItem: React.FC<IOrdersGridRowItemProps> = ({ 
-  isEdit, 
   isAdditionalColumn, 
   updateOrderProduct,
   product,

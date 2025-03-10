@@ -11,7 +11,7 @@ interface IOrdersGridProps {
 
 export const OrdersGrid: React.FC<IOrdersGridProps> = ({ order, updateOrder }) => {
 
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, _setIsEdit] = useState(true);
 
   return (
     <div className={styles['orders-grid']}>
