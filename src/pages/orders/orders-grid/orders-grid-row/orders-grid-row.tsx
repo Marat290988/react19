@@ -24,8 +24,17 @@ export const OrdersGridRow: React.FC<IOrdersGridRowProps> = ({ order, isEdit, up
   }
 
   const gridTemplateColumns = order.purchaseCurrencyName !== '' ? 
-    '50px minmax(200px, auto) 60px 100px 100px 100px 100px 100px 100px 150px 150px' :
-    '50px minmax(200px, auto) 60px 100px 100px 100px 100px 150px 150px';
+    '50px minmax(200px, auto) 60px 100px 100px 100px 100px 100px 100px 150px 150px 150px' :
+    '50px minmax(200px, auto) 60px 100px 100px 100px 100px 150px 150px 150px';
+
+  const sumOrderPurchase = order.productOrder.reduce((acc, cur) => acc + (cur.purchasePrice !== '' ? +cur.purchasePrice : 0) * +cur.quantity, 0);
+  const expanse = 
+    order.expenses.length > 0 ? 
+    (order.expenses.reduce((acc, cur) => acc + (cur.currencyName !== '' ? 
+      (+cur.price / +cur.currencyRate) : +cur.price), 0) - (order.discount.price !== '' ? 
+        (order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price) 
+        : 0)) 
+    : 0;
 
   return (
     <div 
@@ -42,6 +51,8 @@ export const OrdersGridRow: React.FC<IOrdersGridRowProps> = ({ order, isEdit, up
           updateOrderProduct={updateOrderProduct} 
           num={index + 1}
           removeProduct={removeProduct}
+          sumOrderPurchase={sumOrderPurchase}
+          expanse={expanse}
         />
       ))}
     </div>

@@ -4,8 +4,12 @@ export interface IOrder {
   expenses: IExpense[];
   purchaseCurrencyName: string; // Default $
   currencyRateUZSToUSD: string; // Two numbers after the decimal point
-  purchaseCurrencyRateToUSD: string; // Two numbers after the decimal point
-  discount: string; // Two numbers after the decimal point in currency
+  purchaseCurrencyRateToUSD: string; 
+  discount: {
+    price: string; // Two numbers after the decimal point in currency
+    currencyName: string; // Default $
+    currencyRate: string; // Two numbers after the decimal point
+  }; // Two numbers after the decimal point in currency
   createdAt: string,
   updatedAt: string,
   id?: string,
@@ -29,4 +33,5 @@ export interface IExpense {
   price: string; // Two numbers after the decimal point in currency
   currencyName: string; // Default $
   currencyRate: string; // Two numbers after the decimal point
+  id: string;
 }

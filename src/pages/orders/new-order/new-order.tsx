@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { IOrder } from '../../../shared/model/order.interface';
+import { IExpense, IOrder } from '../../../shared/model/order.interface';
 import styles from './new-order.module.scss';
 import { Currency } from './currency/currency';
 import { OrdersGrid } from '../orders-grid/orders-grid';
 import { Button } from '@mantine/core';
+import { Expenses } from './expenses/expenses';
+import { TotalInfo } from './total-info/total-info';
 
 const getInitState = ():IOrder => {
   return {
@@ -22,7 +24,11 @@ const getInitState = ():IOrder => {
     purchaseCurrencyName: '',
     currencyRateUZSToUSD: '',
     purchaseCurrencyRateToUSD: '',
-    discount: '',
+    discount: {
+      price: '',
+      currencyName: '',
+      currencyRate: '',
+    },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   }
@@ -58,6 +64,17 @@ export const NewOrder: React.FC = () => {
     })
   }
 
+  const addExpense = (expense: IExpense) => {
+    setOrder(prevVal => {
+      return {
+        ...prevVal,
+        expenses: [...prevVal.expenses, expense],
+      }
+    });
+  }
+
+  console.log(order)
+
   return (
     <div className={styles['new-order']}>
       <Currency 
@@ -74,6 +91,14 @@ export const NewOrder: React.FC = () => {
         >
           Add new product row
         </Button>
+      </div>
+      <div className={styles['new-order__total']}>
+        <Expenses 
+          order={order} 
+          addExpense={addExpense} 
+          updateOrder={updateOrder}
+        />
+        <TotalInfo order={order} />
       </div>
     </div>
   );

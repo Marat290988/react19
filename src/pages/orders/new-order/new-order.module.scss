@@ -3,4 +3,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
 }
