@@ -29,12 +29,13 @@ export const OrdersGridRow: React.FC<IOrdersGridRowProps> = ({ order, isEdit, up
 
   const sumOrderPurchase = order.productOrder.reduce((acc, cur) => acc + (cur.purchasePrice !== '' ? +cur.purchasePrice : 0) * +cur.quantity, 0);
   const expanse = 
-    order.expenses.length > 0 ? 
+    order.expenses.length > 0 
+    ? 
     (order.expenses.reduce((acc, cur) => acc + (cur.currencyName !== '' ? 
       (+cur.price / +cur.currencyRate) : +cur.price), 0) - (order.discount.price !== '' ? 
         (order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price) 
         : 0)) 
-    : 0;
+    : -(order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price);
 
   return (
     <div 

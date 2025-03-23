@@ -14,7 +14,7 @@ export const TotalInfo: React.FC<{order: IOrder}> = ({ order }) => {
       (+cur.price / +cur.currencyRate) : +cur.price), 0) - (order.discount.price !== '' ? 
         (order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price) 
         : 0)) 
-    : 0;
+    : -(order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price);
 
   const saleSum = (order.productOrder.reduce((acc, cur) => acc + (cur.sellPrice !== '' ? +cur.sellPrice : 0) * +cur.quantity, 0));
   const saleSumUSD = saleSum / (order.currencyRateUZSToUSD !== '' ? +order.currencyRateUZSToUSD : 1); 
