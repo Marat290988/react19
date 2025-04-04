@@ -12,9 +12,10 @@ interface IExpensesProps {
   order: IOrder,
   addExpense: (expense: IExpense) => void,
   updateOrder: (order: IOrder) => void,
+  isEditOrder: boolean,
 }
 
-export const Expenses: React.FC<IExpensesProps> = ({ order, addExpense, updateOrder }) => {
+export const Expenses: React.FC<IExpensesProps> = ({ order, addExpense, updateOrder, isEditOrder }) => {
 
   const [opened, { open, close }] = useDisclosure(false);
   const [openedDiscount, { open: openDiscount, close: closeDiscount }] = useDisclosure(false);
@@ -119,27 +120,33 @@ export const Expenses: React.FC<IExpensesProps> = ({ order, addExpense, updateOr
       {order.expenses.map((exp, i) => (<div key={exp.id} className={styles['expenses__item']}>
         <div className={styles['expenses__item-name']}>{exp.name}</div>
         <div className={styles['expenses__item-price']}>{exp.currencyName !== '' ? formatNumberWithSpaces(+exp.price / +exp.currencyRate, 2) : formatNumberWithSpaces(+exp.price, 2)} $</div>
-        <div
-          className={styles['expenses__item-action']}
-          onClick={() => openModal(exp)}
-        >
-          <EditIcon />
-        </div>
-        <div
-          className={styles['expenses__item-action-remove']}
-          onClick={() => deleteItem(i)}
-        >
-          <RemoveIcon />
-        </div>
+        {isEditOrder && (
+          <>
+            <div
+              className={styles['expenses__item-action']}
+              onClick={() => openModal(exp)}
+            >
+              <EditIcon />
+            </div>
+            <div
+              className={styles['expenses__item-action-remove']}
+              onClick={() => deleteItem(i)}
+            >
+              <RemoveIcon />
+            </div>
+          </>
+        )}
       </div>))}
       {order.discount.price !== '' && <div className={styles['expenses__item']}>
         <div className={styles['expenses__item-name']}>Discount</div>
         <div className={styles['expenses__item-price']}>{discount.currencyName !== '' ? formatNumberWithSpaces(+discount.price / +discount.currencyRate, 2) : formatNumberWithSpaces(+discount.price, 2)} $</div>
       </div>}
-      <div className={styles['expenses__add-button']}>
-        <button onClick={() => openModal()}>Add expense</button>
-        <button onClick={() => openDiscount()}>Add / Edit discount</button>
-      </div>
+      {isEditOrder && (
+        <div className={styles['expenses__add-button']}>
+          <button onClick={() => openModal()}>Add expense</button>
+          <button onClick={() => openDiscount()}>Add / Edit discount</button>
+        </div>
+      )}
       <Modal
         title="Discount"
         opened={openedDiscount}

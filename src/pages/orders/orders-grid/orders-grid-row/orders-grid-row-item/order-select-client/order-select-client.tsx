@@ -17,8 +17,12 @@ export const OrderSelectClient: React.FC<IOrderSelectClientProps> = ({ onSelect,
   const clientRef = useRef<IClient | null>(null);
 
   let width = '';
+  let top = '';
+  let left = '';
   if (contRef.current) {
     width = (contRef.current.getBoundingClientRect().width) + 'px';
+    top = (contRef.current.getBoundingClientRect().top + 23) + 'px';
+    left = (contRef.current.getBoundingClientRect().left) + 'px';
   }
 
   const searchedClients: IClient[] = value === '' ? [] : clients.filter(c => c.name.toLowerCase().includes(value.toLowerCase()));
@@ -38,7 +42,7 @@ export const OrderSelectClient: React.FC<IOrderSelectClientProps> = ({ onSelect,
         return;
       }
       onSelect && onSelect(value);
-    }, 200)
+    }, 100)
   }
 
   return (
@@ -51,7 +55,7 @@ export const OrderSelectClient: React.FC<IOrderSelectClientProps> = ({ onSelect,
         onBlur={() => onBlurInput()}
       />
       {(searchedClients.length > 0 && isSearch) && <>
-        <ul style={{ width: width }}>
+        <ul style={{ width: width, top, left }}>
           {searchedClients.map(c => <li key={c.id} onClick={() => onSelectClient(c)}>{c.name}</li>)}
         </ul>
       </>}

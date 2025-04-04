@@ -6,9 +6,10 @@ interface IOrdersGridRowProps {
   order : IOrder, 
   isEdit: boolean,
   updateOrder: (order: IOrder) => void,
+  isEditOrder: boolean,
 }
 
-export const OrdersGridRow: React.FC<IOrdersGridRowProps> = ({ order, isEdit, updateOrder }) => {
+export const OrdersGridRow: React.FC<IOrdersGridRowProps> = ({ order, isEdit, updateOrder, isEditOrder }) => {
 
   const updateOrderProduct = (product: IProductOrder) => {
     const findIndex = order.productOrder.findIndex(p => p.id === product.id);
@@ -54,6 +55,7 @@ export const OrdersGridRow: React.FC<IOrdersGridRowProps> = ({ order, isEdit, up
           removeProduct={removeProduct}
           sumOrderPurchase={sumOrderPurchase}
           expanse={expanse}
+          isEditOrder={isEditOrder}
         />
       ))}
     </div>

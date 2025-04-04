@@ -7,16 +7,17 @@ import styles from './orders-grid.module.scss';
 interface IOrdersGridProps {
   order: IOrder,
   updateOrder: (order: IOrder) => void,
+  isEditOrder: boolean,
 }
 
-export const OrdersGrid: React.FC<IOrdersGridProps> = ({ order, updateOrder }) => {
+export const OrdersGrid: React.FC<IOrdersGridProps> = ({ order, updateOrder, isEditOrder }) => {
 
   const [isEdit, _setIsEdit] = useState(true);
 
   return (
     <div className={styles['orders-grid']}>
       <OrdersGridHeader order={order} />
-      <OrdersGridRow order={order} isEdit={isEdit} updateOrder={updateOrder} />
+      <OrdersGridRow order={order} isEdit={isEdit} updateOrder={updateOrder} isEditOrder={isEditOrder} />
     </div>
   )
 }

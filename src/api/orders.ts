@@ -1,46 +1,29 @@
-// import { dataBase } from "./firebaseConfig";
-// import { ref, get, push } from "firebase/database";
+import { get, push, ref } from "firebase/database";
+import { dataBase } from "./firebaseConfig";
+import { IOrder } from "@shared/model/order.interface";
 
-// interface IProduct {
-//   name: string,
-// }
+const path = 'orders';
+const dataRef = ref(dataBase, path);
 
-// interface IProductFromOrder extends IProduct {
-//   quantity: number,
-//   buyPrice: number,
-//   sellPrice: number,
-// }
-
-// interface IOrder {
-//   dateCreated: number,
-//   dateUpdated: number,
-//   products: IProductFromOrder[],
-// }
-
-// const path = 'orders';
-// const dataRef = ref(dataBase, path);
-
-// export const OrdersService = {
-//   saveOrder: (order: IOrder) => {
-//     return push(dataRef, order);
-//   },
-//   getOrders: async (): Promise<any> => {
-//     try {
-//       const snapshot = await get(dataRef);
-//       if (snapshot.exists()) {
-//         return snapshot.val(); // Возвращаем данные
-//       } else {
-//         console.log("No data available");
-//         return null;
-//       }
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//       throw error;
-//     }
-//   }
-// }
-
-/* 
-  Path in firebase:
-    YYYY/MM/
-*/
+export const OrderService = {
+  saveOrder: (order: IOrder): Promise<string> => {
+    return push(dataRef, order).then(res => {
+      return res.key as string;
+    });
+  },
+  getOrder: (fbId: string): Promise<IOrder | null> => {
+    const dataProductRef = ref(dataBase, `${path}/${fbId}`);
+    return get(dataProductRef).then(snapshot => {
+      if (snapshot.exists()) {
+        const order: IOrder = snapshot.val();
+        order.fbId = fbId;
+        return order;
+      } else {
+        return null;
+      }
+    }).catch((error) => {
+      console.error("Ошибка при получении объекта:", error);
+      return null;
+    });
+  }
+}

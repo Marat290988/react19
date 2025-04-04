@@ -4,6 +4,17 @@
   flex-direction: column;
   gap: 0.5rem;
 
+  &__header {
+    display: flex;
+    gap: 8px;
+    color: var(--text);
+    align-items: center;
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
+
   &__total {
     display: flex;
     justify-content: space-between;

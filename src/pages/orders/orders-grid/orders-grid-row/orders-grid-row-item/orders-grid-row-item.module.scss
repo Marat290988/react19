@@ -8,6 +8,11 @@
   &.border-right {
     border-right: 1px solid var(--border);
   }
+
+  .grid_body__over-target {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .number-item {
@@ -19,4 +24,15 @@
       height: 20px;
     }
   }
+}
+
+.contacts {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.contacts__list {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mantine-color-blue-filled);
 }

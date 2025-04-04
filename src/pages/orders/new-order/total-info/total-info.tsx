@@ -14,7 +14,7 @@ export const TotalInfo: React.FC<{order: IOrder}> = ({ order }) => {
       (+cur.price / +cur.currencyRate) : +cur.price), 0) - (order.discount.price !== '' ? 
         (order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price) 
         : 0)) 
-    : -(order.discount.currencyName !== '' ? (+order.discount.price / + order.discount.currencyRate) : +order.discount.price);
+    : (order.discount.currencyName !== '' ? -(+order.discount.price / + order.discount.currencyRate) : +order.discount.price);
 
   const saleSum = (order.productOrder.reduce((acc, cur) => acc + (cur.sellPrice !== '' ? +cur.sellPrice : 0) * +cur.quantity, 0));
   const saleSumUSD = saleSum / (order.currencyRateUZSToUSD !== '' ? +order.currencyRateUZSToUSD : 1); 
@@ -52,7 +52,15 @@ export const TotalInfo: React.FC<{order: IOrder}> = ({ order }) => {
             PROFIT
           </div>
           <div className={styles['total-info-item__price']}>
-            {formatNumberWithSpaces((saleSumUSD / sumCostPrice - 1) * 100, 2)} %
+            {saleSum === 0 && saleSumUSD === 0 || sumCostPrice === 0 ? '0' : formatNumberWithSpaces(saleSumUSD - sumCostPrice, 2)} $
+          </div>
+      </div>
+      <div className={styles['total-info-item']}>
+        <div className={styles['total-info-item__name']}>
+            PROFIT %
+          </div>
+          <div className={styles['total-info-item__price']}>
+            {saleSum === 0 && saleSumUSD === 0 || sumCostPrice === 0 ? '0' : formatNumberWithSpaces((saleSumUSD / sumCostPrice - 1) * 100, 2)} %
           </div>
       </div>
     </div>

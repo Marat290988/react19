@@ -38,3 +38,9 @@ export function formatNumberWithSpaces(number: number, decimals: number = 0): st
   // Соединяем целую и дробную части обратно
   return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 }
+
+export function getMonthYear(date: Date = new Date()): string {
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Добавляем ведущий ноль, если месяц < 10
+  const year = date.getFullYear().toString();
+  return `${month}${year}`;
+}
