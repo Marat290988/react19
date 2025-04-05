@@ -1,0 +1,52 @@
+.orders-list-grid {
+  color: var(--text);
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &__header {
+    display: grid;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    &-cell {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+
+      &:last-child {
+        border-right: 1px solid var(--border);
+      }
+    }
+  }
+
+  &__body {
+    display: grid;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    &-cell {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      border-left: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+
+      &:last-child {
+        border-right: 1px solid var(--border);
+      }
+
+    }
+  }
+}
+
+.no-orders {
+  color: var(--text);
+  background-color: var(--bg-dis);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 700;
+}

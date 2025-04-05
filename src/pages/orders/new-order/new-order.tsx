@@ -12,6 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Path, PathOrder } from '@shared/model/path.enum';
 import { useLoadingStore } from '../../../store/loading.store';
 import { ButtonSure } from '@shared/components/custom-grid/sure-button/sure-button';
+import { showNotification } from '@shared/utils/notification';
 
 const getInitState = (): IOrder => {
   return {
@@ -117,6 +118,15 @@ export const NewOrder: React.FC = () => {
     })
   }
 
+  const updatePrder = () => {
+    setDisabled(true);
+    OrderService.updateOrder(order).finally(() => {
+      showNotification('Order has been updated');
+      setDisabled(false);
+      setIsEdit(false);
+    });
+  }
+
   return (
     <div className={styles['new-order']}>
       <div className={styles['new-order__header']}>
@@ -171,7 +181,7 @@ export const NewOrder: React.FC = () => {
       {isEdit && (
         <div>
           <Button variant='filled'
-            onClick={saveOrder}
+            onClick={order.fbId ? updatePrder : saveOrder}
             disabled={disabled}
           >
             {order.fbId ? 'Update Order' : 'Save Order'}

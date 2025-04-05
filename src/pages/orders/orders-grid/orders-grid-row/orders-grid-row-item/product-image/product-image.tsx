@@ -35,6 +35,7 @@ export const ProductImage: React.FC<{productId: string}> = ({ productId }) => {
     <div
       style={{
         marginRight: '0.5rem',
+        minWidth: '26px',
         width: '26px',
         height: '26px',
         borderRadius: '4px',

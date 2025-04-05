@@ -18,9 +18,15 @@ export const OrdersNav: React.FC = () => {
         </div>
       </Link>
       <div>|</div>
-      <div className={styles['orders-nav__item']}>Orders List</div>
-      <div>|</div>
-      <div className={styles['orders-nav__item']}>Reports</div>
+      <Link
+        to={'/' + Path.ORDERS + '/' + PathOrder.ORDERSLIST}
+      >
+        <div 
+          className={`${location.pathname.includes('/' + Path.ORDERS + '/' + PathOrder.ORDERSLIST) ? styles['active'] : ''} ${styles['orders-nav__item']}`}
+        >
+          Orders List
+        </div>
+      </Link>
     </div>
   )
 }

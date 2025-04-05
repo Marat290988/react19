@@ -65,8 +65,8 @@ export const PreOrdersService = {
   removeClients: async (preOrderItem: IPreOrder): Promise<'OK'> => {
     const dataRef = ref(dataBase, `${path}/${preOrderItem.fbId}`);
     await remove(dataRef).catch(error => {
-      console.error('Error removing client:', error);
-      showNotification('Error removing client', 'red');
+      console.error('Error removing pre-order:', error);
+      showNotification('Error removing pre-order', 'red');
     });
     return 'OK';
   },

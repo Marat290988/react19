@@ -10,6 +10,5 @@ export enum Path {
 export enum PathOrder {
   NEW = 'new',
   WATCH = 'watch',
-  REPORTS = 'reports',
   ORDERSLIST = 'orderslist',
 }

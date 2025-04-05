@@ -1,0 +1,30 @@
+.row {
+  display: grid;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  &:hover {
+    background-color: var(--bg-hover);
+  }
+
+  &-cell {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    border-left: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+
+    &:last-child {
+      border-right: 1px solid var(--border);
+    }
+
+    a {
+      color: var(--text);
+    }
+
+  }
+
+  .right {
+    text-align: right;
+  }
+}

@@ -1,0 +1,10 @@
+.orders-list-panel {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+:global(.mantine-Select-option) span {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
