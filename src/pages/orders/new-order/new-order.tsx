@@ -63,6 +63,7 @@ export const NewOrder: React.FC = () => {
           setOrder(order);
           setLocalLoading(false);
         } else {
+          setLocalLoading(false);
           navigate('/' + Path.ORDERS + '/' + PathOrder.NEW);
         }
       })
