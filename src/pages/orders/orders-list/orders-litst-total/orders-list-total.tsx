@@ -4,7 +4,7 @@ import { formatNumberWithSpaces } from '@shared/utils/convert';
 
 export const OrdersListTotal: React.FC<{orders: IOrder[]}> = ({ orders }) => {
 
-  if (orders.filter(order => order.allValid).length > 0) {
+  if (orders.filter(order => order.allValid).length === 0) {
     return <></>;
   }
 
