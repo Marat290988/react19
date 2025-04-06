@@ -128,12 +128,20 @@ export const NewOrder: React.FC = () => {
     });
   }
 
+  const deleteOrder = () => {
+    return OrderService.removeOrder(order.fbId!).then(res => {
+      if (res && res === 'OK') {
+        navigate('/' + Path.ORDERS + '/' + PathOrder.ORDERSLIST);
+      }
+    });
+  }
+
   return (
     <div className={styles['new-order']}>
       <div className={styles['new-order__header']}>
         <h2>Order from {formatDate(new Date(order.createdAt))}</h2>
-        {isEdit && <ButtonSure
-          onConfirm={() => Promise.resolve()}
+        {isEdit && order.fbId && <ButtonSure
+          onConfirm={() => deleteOrder()}
           btnConfig={{
             buttonTitle: 'Delete',
             typeAction: 'item',

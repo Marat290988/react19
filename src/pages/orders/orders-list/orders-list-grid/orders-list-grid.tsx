@@ -2,7 +2,7 @@ import { IOrder } from '@shared/model/order.interface';
 import styles from './orders-list-grid.module.scss';
 import { OrdersListGridRow } from './orders-list-grid-row/orders-list-grid-row';
 
-const gridTemplateColumns = 'minmax(200px, auto) minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px)';
+const gridTemplateColumns = 'minmax(200px, auto) 200px 200px 200px 200px';
 
 interface IOrdersListGridProps {
   orders: IOrder[],

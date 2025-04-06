@@ -45,7 +45,7 @@ export const OrdersListTotal: React.FC<{orders: IOrder[]}> = ({ orders }) => {
           TOTAL COST
         </div>
         <div className={styles['orders-list-total__row-item']}>
-          {formatNumberWithSpaces(costPrice, 2)}
+          {formatNumberWithSpaces(costPrice, 2)} $
         </div>
       </div>
       <div className={styles['orders-list-total__row']}>
@@ -53,7 +53,7 @@ export const OrdersListTotal: React.FC<{orders: IOrder[]}> = ({ orders }) => {
           TOTAL SALE
         </div>
         <div className={styles['orders-list-total__row-item']}>
-          {formatNumberWithSpaces(saleOrdersSum, 2)}
+          {formatNumberWithSpaces(saleOrdersSum, 2)} $
         </div>
       </div>
       <div className={styles['orders-list-total__row']}>
@@ -61,7 +61,7 @@ export const OrdersListTotal: React.FC<{orders: IOrder[]}> = ({ orders }) => {
           PROFIT
         </div>
         <div className={styles['orders-list-total__row-item']}>
-          {formatNumberWithSpaces(profit, 2)}
+          {formatNumberWithSpaces(profit, 2)} $
         </div>
       </div>
       <div className={styles['orders-list-total__row']}>
