@@ -13,6 +13,9 @@ import { Path, PathOrder } from '@shared/model/path.enum';
 import { useLoadingStore } from '../../../store/loading.store';
 import { ButtonSure } from '@shared/components/custom-grid/sure-button/sure-button';
 import { showNotification } from '@shared/utils/notification';
+import { DateInput } from '@mantine/dates';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 
 const getInitState = (): IOrder => {
   return {
@@ -149,6 +152,11 @@ export const NewOrder: React.FC = () => {
             isSure: true,
           }}
           title={'Delete'}
+        />}
+        {isEdit && <DateInput 
+          placeholder="Order from"
+          value={new Date(order.createdAt)}
+          onChange={date => setOrder({ ...order, createdAt: date!.toISOString() })}
         />}
       </div>
       {isEdit ? (

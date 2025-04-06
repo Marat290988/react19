@@ -10,10 +10,12 @@ interface IOrdersListGridProps {
 
 export const OrdersListGrid: React.FC<IOrdersListGridProps> = ({ orders }) => {
 
+  const sortedOrder = orders.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
   return (
     <>
       {
-        orders.length > 0 && (
+        sortedOrder.length > 0 && (
           <>
             <div className={styles['orders-list-grid']}>
               <div
@@ -26,7 +28,7 @@ export const OrdersListGrid: React.FC<IOrdersListGridProps> = ({ orders }) => {
                 <div className={styles['orders-list-grid__header-cell']}>Profit</div>
                 <div className={styles['orders-list-grid__header-cell']}>%</div>
               </div>
-              {orders.map(o => (
+              {sortedOrder.map(o => (
                 <OrdersListGridRow order={o} gridTemplateColumns={gridTemplateColumns} key={o.fbId} />
               ))}
             </div>
@@ -34,7 +36,7 @@ export const OrdersListGrid: React.FC<IOrdersListGridProps> = ({ orders }) => {
 
         )
       }
-      {orders.length === 0 && <p className={styles['no-orders']}>There are no orders</p>}
+      {sortedOrder.length === 0 && <p className={styles['no-orders']}>There are no orders</p>}
     </>
   )
 }
