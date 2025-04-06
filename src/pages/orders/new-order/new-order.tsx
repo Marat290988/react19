@@ -126,6 +126,13 @@ export const NewOrder: React.FC = () => {
   }
 
   const updatePrder = () => {
+    let isValid = true;
+    order.productOrder.forEach(p => {
+      if (p.name === '' || p.purchasePrice === '' || p.sellPrice === '' || p.clientName === '') {
+        isValid = false;
+      }
+    });
+    order.allValid = isValid;
     setDisabled(true);
     OrderService.updateOrder(order).finally(() => {
       showNotification('Order has been updated');
