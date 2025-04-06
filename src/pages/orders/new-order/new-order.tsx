@@ -63,6 +63,9 @@ export const NewOrder: React.FC = () => {
           if (!order.expenses) {
             order.expenses = [];
           }
+          if (!order.productOrder) {
+            order.productOrder = [];
+          }
           setOrder(order);
           setLocalLoading(false);
         } else {
