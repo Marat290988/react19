@@ -159,7 +159,7 @@ export const NewOrder: React.FC = () => {
         {isEdit && <DateInput 
           placeholder="Order from"
           value={new Date(order.createdAt)}
-          onChange={date => setOrder({ ...order, createdAt: date!.toISOString() })}
+          onChange={date => setOrder({ ...order, keyForSearch: getMonthYear(date!), createdAt: date!.toISOString() })}
         />}
       </div>
       {isEdit ? (
