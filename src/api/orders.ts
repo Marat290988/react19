@@ -62,5 +62,24 @@ export const OrderService = {
       console.error("Ошибка при получении объекта:", error);
       throw error;
     }
+  },
+  getOrdersByYear: async (year: number): Promise<IOrder[]> => {
+    if (Number.isInteger(year) && year >= 2024) {
+      console.log(year)
+      const q = query(dataRef, orderByChild('year'), equalTo(`${year}`));
+      const snapshot = await get(q);
+      if (snapshot.exists()) {
+        const results: IOrder[] = [];
+        snapshot.forEach((childSnapshot) => {
+          results.push({ fbId: childSnapshot.key, ...childSnapshot.val() }); // Сохраняем данные вместе с ключом
+        });
+        return results;
+      } else {
+        console.log("Объект не найден");
+        return [];
+      }
+    } else {
+      return [];
+    }
   }
 }

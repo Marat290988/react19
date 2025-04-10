@@ -95,10 +95,10 @@ export const OrdersGridRowItem: React.FC<IOrdersGridRowItemProps> = ({
       <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>{formatNumberWithSpaces((+product.purchasePrice / +order.purchaseCurrencyRateToUSD * product.quantity), 2)}</div>
       <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>{formatNumberWithSpaces((+costPrice), 2)}</div>
       <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>{formatNumberWithSpaces((+costPrice * product.quantity), 2)}</div>
-      <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>
+      <div className={`${styles['grid-row-item']} ${styles['sale-color']}`} style={{ textAlign: 'right'}}>
         {isEditOrder ? <InputPriceOrder product={product} onChangePrice={updateOrderProduct} field={InputPriceField.SELL_PRICE} /> : formatNumberWithSpaces(+product.sellPrice, 2)}
       </div>
-      <div className={`${styles['grid-row-item']}`} style={{ textAlign: 'right'}}>
+      <div className={`${styles['grid-row-item']} ${styles['sale-color']}`} style={{ textAlign: 'right'}}>
         {formatNumberWithSpaces((+product.sellPrice * product.quantity), 2)}
       </div>
       <div className={`${styles['grid-row-item']} ${styles['border-right']}`}>
@@ -154,10 +154,10 @@ export const OrdersGridRowItem: React.FC<IOrdersGridRowItemProps> = ({
       <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>{formatNumberWithSpaces((+product.purchasePrice * product.quantity), 2)}</div>
       <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>{formatNumberWithSpaces((+costPrice), 2)}</div>
       <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>{formatNumberWithSpaces((+costPrice * product.quantity), 2)}</div>
-      <div className={styles['grid-row-item']} style={{ textAlign: 'right'}}>
+      <div className={`${styles['grid-row-item']} ${styles['sale-color']}`} style={{ textAlign: 'right'}}>
         {isEditOrder ? <InputPriceOrder product={product} onChangePrice={updateOrderProduct} field={InputPriceField.SELL_PRICE} /> : formatNumberWithSpaces(+product.sellPrice, 2)}
       </div>
-      <div className={`${styles['grid-row-item']}`} style={{ textAlign: 'right'}}>
+      <div className={`${styles['grid-row-item']} ${styles['sale-color']}`} style={{ textAlign: 'right'}}>
         {formatNumberWithSpaces((+product.sellPrice * product.quantity), 2)}
       </div>
       <div className={`${styles['grid-row-item']} ${styles['border-right']}`}>

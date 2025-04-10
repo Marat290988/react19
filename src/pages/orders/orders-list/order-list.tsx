@@ -12,9 +12,9 @@ export const OrderList: React.FC = () => {
   const { setLocalLoading } = useLoadingStore();
   const [orders, setOrders] = useState<IOrder[]>([]);
 
-  const getOrdersByYearMonth = (dateKey: string) => {
+  const getOrdersByYearMonth = (dateKey: string, isAll: boolean = false) => {
     setLocalLoading(true);
-    OrderService.getOrdersByYearMonth(dateKey).then(resOrders => {
+    (isAll ? OrderService.getOrdersByYear(+dateKey) : OrderService.getOrdersByYearMonth(dateKey)).then(resOrders => {
       setOrders(resOrders);
     }).finally(() => {
       setLocalLoading(false);

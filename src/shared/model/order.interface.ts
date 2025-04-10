@@ -16,6 +16,7 @@ export interface IOrder {
   fbId?: string,
   allValid: boolean,
   keyForSearch: string,
+  year: string,
 }
 
 export interface IProductOrder {

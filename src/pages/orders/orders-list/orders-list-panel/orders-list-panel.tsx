@@ -4,7 +4,7 @@ import { Button, Select } from '@mantine/core';
 import { getMonthYear } from '@shared/utils/convert';
 
 interface IOrdersListPanelProps {
-  getOrdersByYearMonth: (dateKey: string) => void,
+  getOrdersByYearMonth: (dateKey: string, isAll?: boolean) => void,
 }
 
 export const OrdersListPanel: React.FC<IOrdersListPanelProps> = ({ getOrdersByYearMonth }) => {
@@ -25,7 +25,8 @@ export const OrdersListPanel: React.FC<IOrdersListPanelProps> = ({ getOrdersByYe
   }, []);
 
   const onSearch = () => {
-    getOrdersByYearMonth(`${months[selectedMonth as string]}${selectedYear}`);
+    const searchKey = selectedMonth === 'All' ? selectedYear : `${months[selectedMonth as string]}${selectedYear}`;
+    getOrdersByYearMonth(`${searchKey}`, selectedMonth === 'All' ? true : false);
   }
 
   return (

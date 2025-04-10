@@ -43,6 +43,7 @@ const getInitState = (): IOrder => {
     updatedAt: new Date().toISOString(),
     allValid: false,
     keyForSearch: getMonthYear(),
+    year: `${new Date().getFullYear()}`,
   }
 }
 
@@ -166,7 +167,7 @@ export const NewOrder: React.FC = () => {
         {isEdit && <DateInput 
           placeholder="Order from"
           value={new Date(order.createdAt)}
-          onChange={date => setOrder({ ...order, keyForSearch: getMonthYear(date!), createdAt: date!.toISOString() })}
+          onChange={date => setOrder({ ...order, keyForSearch: getMonthYear(date!), createdAt: date!.toISOString(), year: `${date?.getFullYear()}` })}
         />}
       </div>
       {isEdit ? (
