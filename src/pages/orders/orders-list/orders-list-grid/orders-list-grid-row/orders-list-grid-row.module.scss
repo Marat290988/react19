@@ -27,4 +27,18 @@
   .right {
     text-align: right;
   }
+
+  .row-cell-column {
+    display: flex;
+    flex-direction: column;
+
+    &__list {
+      line-height: 1;
+
+      span {
+        font-size: 0.8rem;
+        color: #43abf7;
+      }
+    }
+  }
 }

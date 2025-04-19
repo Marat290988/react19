@@ -35,11 +35,15 @@ export const OrdersListGridRow: React.FC<IOrdersListGridRowProps> = ({ order, gr
       className={styles['row']}
       style={{ gridTemplateColumns: gridTemplateColumns }}
     >
-      <div className={`${styles['row-cell']}`}>
+      <div className={`${styles['row-cell']} ${styles['row-cell-column']}`}>
         <Link to={'/' + Path.ORDERS + '/' + PathOrder.WATCH + '/' + order.fbId}>
           Order From {formatDate(new Date(order.createdAt))}
         </Link>
-
+        <div className={styles['row-cell-column__list']}>
+          {order.productOrder.map((p, index) => (<span key={p.id}>
+            {p.name}{index !== order.productOrder.length - 1 ? <span style={{color: '#465565', fontWeight: '700'}}> | </span> : ''}
+          </span>))}
+        </div>
       </div>
       <div className={`${styles['row-cell']} ${styles['right']}`}>
         {order.allValid ? formatNumberWithSpaces(costSum, 2) : '-'}
