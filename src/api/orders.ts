@@ -65,7 +65,6 @@ export const OrderService = {
   },
   getOrdersByYear: async (year: number): Promise<IOrder[]> => {
     if (Number.isInteger(year) && year >= 2024) {
-      console.log(year)
       const q = query(dataRef, orderByChild('year'), equalTo(`${year}`));
       const snapshot = await get(q);
       if (snapshot.exists()) {
