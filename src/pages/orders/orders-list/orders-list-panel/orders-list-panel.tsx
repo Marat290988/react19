@@ -38,11 +38,11 @@ export const OrdersListPanel: React.FC<IOrdersListPanelProps> = ({ getOrdersByYe
   }, [searchParams]);
 
   useEffect(() => {
-    if (!searchParams.get('month') || !searchParams.get('year')) {
-      setQuery({ year: selectedYear!, month: months[selectedMonth as string] });
-    } else if (validQueryParams(searchParams.get('year')!, searchParams.get('month')!)) {
+    if (validQueryParams(searchParams.get('year')!, searchParams.get('month')!)) {
       setSelectedYear(searchParams.get('year')!);
       setSelectedMonth(monthsReverse[searchParams.get('month')!]);
+    } else {
+      setQuery({ year: selectedYear!, month: months[selectedMonth as string] });
     }
   }, []);
 
