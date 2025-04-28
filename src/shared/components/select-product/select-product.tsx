@@ -15,6 +15,7 @@ export const SelectProduct: React.FC<ISelectProduct> = ({ onSelect, value: initV
   const { products: storageProducts, } = useProductStore();
   const contRef = useRef<HTMLInputElement>(null);
   const productRef = useRef<IProduct | null>(null);
+  const [top, setTop] = useState<number>(0);
 
   let width = '';
   if (contRef.current) {
@@ -41,17 +42,21 @@ export const SelectProduct: React.FC<ISelectProduct> = ({ onSelect, value: initV
     }, 200)
   }
 
+  const onFocusInput = () => {
+    setTop(contRef.current?.getBoundingClientRect().top! + 26);
+  }
+
   return (
     <div className={styles['select-product']} ref={contRef}>
       <input 
         value={value}
         onChange={e => {setValue(e.target.value); productRef.current = null;}}
         style={{ backgroundColor: value === '' ? 'var(--red-light)' : '' }}
-        onFocus={() => setIsSearch(true)}
+        onFocus={() => {setIsSearch(true); onFocusInput();}}
         onBlur={() => onBlurInput()}
       />
       {(searchedProducts.length > 0 && isSearch) && <>
-        <ul style={{ width: width }}>
+        <ul style={{ width: width, top: top + 'px' }}>
           {searchedProducts.map(p => <li key={p.id} onClick={() => onSelectProduct(p)}>{p.name}</li>)}
         </ul>
       </>}
